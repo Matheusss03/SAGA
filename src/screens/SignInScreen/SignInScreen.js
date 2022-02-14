@@ -1,7 +1,8 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native'
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
 import React, {useState} from 'react'
 import Logo from '../../../assets/images/logo.png'
 import CustomInput from '../../components/CustomInput/CustomInput'
+import CustomButton from '../../components/CustomButton/CustomButton'
 
 const SignInScreen = () => {
   const [username, setUsername] = useState('')
@@ -9,27 +10,81 @@ const SignInScreen = () => {
 
   const {height} = useWindowDimensions()
 
+  const onSignInPressed = () => {
+    console.warn("Logar")
+  }
+
+  const onForgotPasswordPressed = () => {
+    console.warn("Esqueceu a senha")
+  }
+
+  const onSignInFacebook = () => {
+    console.warn("Entrou pelo facebook")
+  }
+
+  const onSignInGoogle = () => {
+    console.warn("Entrou pelo google")
+  }
+
+  const onSignUpPress = () => {
+    console.warn("Criar conta")
+  }
+
   return (
-    <View style={styles.root}>
-      <Image 
-          source={Logo} 
-          style={[styles.logo, {height: height * 0.3}]} 
-          resizeMode='contain'
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.root}>
+        <Image 
+            source={Logo} 
+            style={[styles.logo, {height: height * 0.3}]} 
+            resizeMode='contain'
+          />
+
+        <CustomInput
+            placeholder="Login"
+            value={username}
+            setValue={setUsername}
+          />
+
+        <CustomInput
+            placeholder="Senha"
+            value={password}
+            setValue={setPassword}
+            secureTextEntry
+          />
+
+        <CustomButton
+            text="Entrar"
+            onPress={onSignInPressed}
         />
 
-      <CustomInput
-          placeholder="Login"
-          value={username}
-          setValue={setUsername}
+        <CustomButton
+            text="Esqueci a senha"
+            onPress={onForgotPasswordPressed}
+            type="TERTIARY"
         />
 
-      <CustomInput
-          placeholder="Senha"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
+        <CustomButton
+            text="Entrar pelo Facebook"
+            onPress={onSignInFacebook}
+            bgColor="#e7eaf4"
+            fgColor="#4765a9"
         />
-    </View>
+
+        <CustomButton
+            text="Entrar pelo Google"
+            onPress={onSignInGoogle}
+            bgColor="#fae9ea"
+            fgColor="#dd4d44"
+        />
+
+        <CustomButton
+            text="Não tem conta? Crie uma"
+            onPress={onSignUpPress}
+            type="TERTIARY"
+        />
+
+      </View>
+    </ScrollView>
   )
 }
 
