@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import SignInScreen from './src/screens/SignInScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
+import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
 
 function App() {
   return (
-    <View style={styles.root}>
-      <SignInScreen/>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.root}>
+      <ConfirmEmailScreen/>
+    </SafeAreaView>
   );
 }
 
