@@ -4,23 +4,25 @@ import Logo from '../../../assets/images/logo.png'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
 
 const SignInScreen = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const {height} = useWindowDimensions()
+  const navigation = useNavigation()
 
   const onSignInPressed = () => {
-    console.warn("Logar")
+    navigation.navigate('Home')
   }
 
   const onForgotPasswordPressed = () => {
-    console.warn("Esqueceu a senha")
+    navigation.navigate('ForgotPassword')
   }
 
   const onSignUpPress = () => {
-    console.warn("Criar conta")
+    navigation.navigate('SignUp')
   }
 
   return (

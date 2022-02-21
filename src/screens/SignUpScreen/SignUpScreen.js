@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
 
 const SignUpScreen = () => {
   const [username, setUsername] = useState('')
@@ -10,12 +11,14 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
 
+  const navigation = useNavigation()
+
   const onRegisterPressed = () => {
-    console.warn("Cadastrar")
+    navigation.navigate('ConfirmEmail')
   }
 
   const onSignInPress = () => {
-    console.warn("Criar conta")
+    navigation.navigate('SignIn')
   }
 
   const onTermsOfUsePressed = () => {
