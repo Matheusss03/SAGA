@@ -1,19 +1,20 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView} from 'react-native'
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput} from 'react-native'
 import React, {useState} from 'react'
 import Logo from '../../../assets/images/logo.png'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
+import {useForm, Controller} from 'react-hook-form'
 
 const SignInScreen = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const {height} = useWindowDimensions()
   const navigation = useNavigation()
 
-  const onSignInPressed = () => {
+  const {control, handleSubmit, formState: {errors} } = useForm()
+
+  const onSignInPressed = (data) => {
+    console.log(data)
     navigation.navigate('Home')
   }
 
@@ -35,21 +36,25 @@ const SignInScreen = () => {
           />
 
         <CustomInput
+            name="login"
             placeholder="Login"
-            value={username}
-            setValue={setUsername}
+            rules={{required: 'Login é obrigatório'}}
+            control={control}
           />
 
         <CustomInput
+            name="senha"
             placeholder="Senha"
-            value={password}
-            setValue={setPassword}
+            control={control}
+            rules={{
+              required: 'Senha é obrigatória',
+              minLength: {value: 3, message: 'A senha precisa ter no mínimo 3 caracteres'}}}
             secureTextEntry
           />
 
         <CustomButton
             text="Entrar"
-            onPress={onSignInPressed}
+            onPress={handleSubmit(onSignInPressed)}
         />
 
         <CustomButton
