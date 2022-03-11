@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, ScrollView} from 'react-native'
-import React, {useState} from 'react'
+import React from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import { useNavigation } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
 
 const ForgotPasswordScreen = () => {
-  const [username, setUsername] = useState('')
+  const {control, handleSubmit} = useForm();
 
   const navigation = useNavigation()
 
@@ -24,18 +25,19 @@ const ForgotPasswordScreen = () => {
 
         <CustomInput
             placeholder="Login"
-            value={username}
-            setValue={setUsername}
+            name="login"
+            control={control}
+            rules={{required: 'Insira seu login'}}
           />
 
         <CustomButton
             text="Enviar"
-            onPress={onSendPressed}
+            onPress={handleSubmit(onSendPressed)}
         />
 
         <CustomButton
             text="Voltar ao login"
-            onPress={onSignInPress}
+            onPress={handleSubmit(onSignInPress)}
             type="TERTIARY"
         />
 
