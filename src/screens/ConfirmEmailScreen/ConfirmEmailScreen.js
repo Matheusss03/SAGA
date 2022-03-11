@@ -3,8 +3,10 @@ import React, {useState} from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import { useNavigation } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
 
 const ConfirmEmailScreen = () => {
+  const {control, handleSubmit} = useForm();
   const [code, setCode] = useState('')
 
   const navigation = useNavigation()
@@ -28,24 +30,25 @@ const ConfirmEmailScreen = () => {
 
         <CustomInput
             placeholder="Coloque seu código de confirmação"
-            value={code}
-            setValue={setCode}
+            name="code"
+            control={control}
+            rules={{required: 'Insira o código de confirmação'}}
           />
 
         <CustomButton
             text="Confirmar"
-            onPress={onConfirmPressed}
+            onPress={handleSubmit(onConfirmPressed)}
         />
 
         <CustomButton
             text="Reenviar código"
-            onPress={onResendPress}
+            onPress={handleSubmit(onResendPress)}
             type="SECONDARY"
         />
 
         <CustomButton
             text="Voltar ao login"
-            onPress={onSignInPress}
+            onPress={handleSubmit(onSignInPress)}
             type="TERTIARY"
         />
 
