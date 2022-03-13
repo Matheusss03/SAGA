@@ -1,12 +1,12 @@
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
-
+import React from 'react'
 import Navigation from './src/navigation';
 import Amplify from 'aws-amplify';
 import config from './src/aws-exports';
 
 Amplify.configure(config)
 
-function App() {
+const App = () => {
   //Auth.signOut()
   return (
     <SafeAreaView style={styles.root}>

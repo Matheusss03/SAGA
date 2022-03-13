@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput} from 'react-native'
+import { View, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput, Alert} from 'react-native'
 import React, {useState} from 'react'
 import Logo from '../../../assets/images/logo.png'
 import CustomInput from '../../components/CustomInput/CustomInput'
@@ -6,16 +6,30 @@ import CustomButton from '../../components/CustomButton/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import {useForm, Controller} from 'react-hook-form'
+import { Auth } from 'aws-amplify'
 
 const SignInScreen = () => {
   const {height} = useWindowDimensions()
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
 
   const {control, handleSubmit, formState: {errors} } = useForm()
 
-  const onSignInPressed = (data) => {
-    console.log(data)
-    navigation.navigate('Home')
+  const onSignInPressed = async (data) => {
+    if (loading) {
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const response = await Auth.signIn(data.username, data.password)
+      console.log(response)
+    } catch (e) {
+      Alert.alert('Algo deu errado', e.message)
+    }
+
+    setLoading(false)
   }
 
   const onForgotPasswordPressed = () => {
@@ -36,14 +50,14 @@ const SignInScreen = () => {
           />
 
         <CustomInput
-            name="login"
+            name="username"
             placeholder="Login"
             rules={{required: 'Login é obrigatório'}}
             control={control}
           />
 
         <CustomInput
-            name="senha"
+            name="password"
             placeholder="Senha"
             control={control}
             rules={{
@@ -53,7 +67,7 @@ const SignInScreen = () => {
           />
 
         <CustomButton
-            text="Entrar"
+            text={loading ? 'Carregando...' : "Entrar"}
             onPress={handleSubmit(onSignInPressed)}
         />
 

@@ -1,22 +1,36 @@
-import { View, Text, StyleSheet, ScrollView} from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert} from 'react-native'
 import React, {useState} from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import {useForm} from 'react-hook-form'
+import { Auth } from 'aws-amplify'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
   const {control, handleSubmit, watch} = useForm();
-  const pwd = watch('senha')
+  const pwd = watch('password')
 
   const navigation = useNavigation()
 
-  const onRegisterPressed = () => {
-    navigation.navigate('ConfirmEmail')
+  const onRegisterPressed = async (data) => {
+    const {username, name, password, email} = data
+
+    try {
+      const response = await Auth.signUp({
+        username,
+        password,
+        attributes: {email, name, preferred_username: username}
+      })
+
+      navigation.navigate('ConfirmEmail', {username})
+
+    } catch (e) {
+      Alert.alert('Algo deu errado', e.message)
+    }
   }
 
   const onSignInPress = () => {
@@ -37,7 +51,7 @@ const SignUpScreen = () => {
         <Text style={styles.title}>Criar uma conta</Text>
 
         <CustomInput
-            name="nome"
+            name="name"
             control={control}
             placeholder="Nome"
             rules={{
@@ -54,6 +68,23 @@ const SignUpScreen = () => {
           />
 
         <CustomInput
+            name="username"
+            control={control}
+            placeholder="Username"
+            rules={{
+              required: 'Username obrigatório',
+              minLength: {
+                value: 3,
+                message: 'Username precisa ter no mínimo 3 caracteres',
+              },
+              maxLength: {
+                value: 24,
+                message: 'Username pode ter no máximo 24 caracteres',
+              },
+            }}
+          />
+
+        <CustomInput
             placeholder="Email"
             control={control}
             name="email"
@@ -65,7 +96,7 @@ const SignUpScreen = () => {
 
         <CustomInput
             placeholder="Senha"
-            name="senha"
+            name="password"
             control={control}
             rules={{
               required: 'Senha obrigatória',

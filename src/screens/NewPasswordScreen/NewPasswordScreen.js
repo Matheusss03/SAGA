@@ -1,17 +1,23 @@
-import { View, Text, StyleSheet, ScrollView} from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert} from 'react-native'
 import React from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput'
 import CustomButton from '../../components/CustomButton/CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
+import { Auth } from 'aws-amplify'
 
 const NewPasswordScreen = () => {
   const {control, handleSubmit} = useForm();
 
   const navigation = useNavigation()
 
-  const onSendPressed = () => {
-    navigation.navigate('Home')
+  const onSubmitPressed = async data => {
+    try {
+      await Auth.forgotPasswordSubmit(data.username, data.code, data.password);
+      navigation.navigate('SignIn');
+    } catch (e) {
+      Alert.alert('Algo deu errado', e.message);
+    }
   }
 
   const onSignInPress = () => {
@@ -24,6 +30,13 @@ const NewPasswordScreen = () => {
         <Text style={styles.title}>Crie uma nova senha</Text>
 
         <CustomInput
+          placeholder="Username"
+          name="username"
+          control={control}
+          rules={{required: 'Username é obrigatório'}}
+        />
+
+        <CustomInput
             placeholder="Código"
             control={control}
             name="code"
@@ -33,7 +46,7 @@ const NewPasswordScreen = () => {
         <CustomInput
             placeholder="Nova senha"
             control={control}
-            name="new_password"
+            name="password"
             secureTextEntry
             rules={{
               required: 'Senha obrigatória',
@@ -46,7 +59,7 @@ const NewPasswordScreen = () => {
 
         <CustomButton
             text="Enviar"
-            onPress={handleSubmit(onSendPressed)}
+            onPress={handleSubmit(onSubmitPressed)}
         />
 
         <CustomButton
