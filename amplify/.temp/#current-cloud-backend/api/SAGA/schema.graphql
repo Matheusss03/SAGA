@@ -1,0 +1,45 @@
+type Subject @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String!
+  Teacher: String!
+  Credits: Int!
+  Days: [String!]
+  Timetable: [Task] @hasMany(indexName: "bySubject", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+}
+
+type Issue @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Answer: String!
+  Question: String!
+  Type: String
+  Area: String!
+  SubArea: String!
+  Theme: String
+  Difficult: Int
+  Points: Int!
+  userID: ID! @index(name: "byUser")
+}
+
+type Task @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Description: String!
+  StartDate: AWSTimestamp!
+  FinalDate: AWSTimestamp!
+  subjectID: ID! @index(name: "bySubject")
+  userID: ID! @index(name: "byUser")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String!
+  Email: String!
+  Password: String!
+  Username: String!
+  Experience: Float!
+  Level: Int!
+  Icon: AWSURL
+  Issues: [Issue] @hasMany(indexName: "byUser", fields: ["id"])
+  Tasks: [Task] @hasMany(indexName: "byUser", fields: ["id"])
+  Subjects: [Subject] @hasMany(indexName: "byUser", fields: ["id"])
+}

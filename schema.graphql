@@ -1,0 +1,447 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Issue @aws_api_key @aws_iam {
+  Answer: String!
+  Area: String!
+  Difficult: Int
+  Points: Int!
+  Question: String!
+  SubArea: String!
+  Theme: String
+  Type: String
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  _version: Int!
+  createdAt: AWSDateTime!
+  id: ID!
+  updatedAt: AWSDateTime!
+  userID: ID!
+}
+
+type ModelIssueConnection @aws_api_key @aws_iam {
+  items: [Issue]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+type ModelSubjectConnection @aws_api_key @aws_iam {
+  items: [Subject]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+type ModelTaskConnection @aws_api_key @aws_iam {
+  items: [Task]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+type ModelUserConnection @aws_api_key @aws_iam {
+  items: [User]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+type Mutation {
+  createIssue(condition: ModelIssueConditionInput, input: CreateIssueInput!): Issue @aws_api_key @aws_iam
+  createSubject(condition: ModelSubjectConditionInput, input: CreateSubjectInput!): Subject @aws_api_key @aws_iam
+  createTask(condition: ModelTaskConditionInput, input: CreateTaskInput!): Task @aws_api_key @aws_iam
+  createUser(condition: ModelUserConditionInput, input: CreateUserInput!): User @aws_api_key @aws_iam
+  deleteIssue(condition: ModelIssueConditionInput, input: DeleteIssueInput!): Issue @aws_api_key @aws_iam
+  deleteSubject(condition: ModelSubjectConditionInput, input: DeleteSubjectInput!): Subject @aws_api_key @aws_iam
+  deleteTask(condition: ModelTaskConditionInput, input: DeleteTaskInput!): Task @aws_api_key @aws_iam
+  deleteUser(condition: ModelUserConditionInput, input: DeleteUserInput!): User @aws_api_key @aws_iam
+  updateIssue(condition: ModelIssueConditionInput, input: UpdateIssueInput!): Issue @aws_api_key @aws_iam
+  updateSubject(condition: ModelSubjectConditionInput, input: UpdateSubjectInput!): Subject @aws_api_key @aws_iam
+  updateTask(condition: ModelTaskConditionInput, input: UpdateTaskInput!): Task @aws_api_key @aws_iam
+  updateUser(condition: ModelUserConditionInput, input: UpdateUserInput!): User @aws_api_key @aws_iam
+}
+
+type Query {
+  getIssue(id: ID!): Issue @aws_api_key @aws_iam
+  getSubject(id: ID!): Subject @aws_api_key @aws_iam
+  getTask(id: ID!): Task @aws_api_key @aws_iam
+  getUser(id: ID!): User @aws_api_key @aws_iam
+  listIssues(filter: ModelIssueFilterInput, limit: Int, nextToken: String): ModelIssueConnection @aws_api_key @aws_iam
+  listSubjects(filter: ModelSubjectFilterInput, limit: Int, nextToken: String): ModelSubjectConnection @aws_api_key @aws_iam
+  listTasks(filter: ModelTaskFilterInput, limit: Int, nextToken: String): ModelTaskConnection @aws_api_key @aws_iam
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
+  syncIssues(filter: ModelIssueFilterInput, lastSync: AWSTimestamp, limit: Int, nextToken: String): ModelIssueConnection @aws_api_key @aws_iam
+  syncSubjects(filter: ModelSubjectFilterInput, lastSync: AWSTimestamp, limit: Int, nextToken: String): ModelSubjectConnection @aws_api_key @aws_iam
+  syncTasks(filter: ModelTaskFilterInput, lastSync: AWSTimestamp, limit: Int, nextToken: String): ModelTaskConnection @aws_api_key @aws_iam
+  syncUsers(filter: ModelUserFilterInput, lastSync: AWSTimestamp, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
+}
+
+type Subject @aws_api_key @aws_iam {
+  Credits: Int!
+  Days: [String!]
+  Name: String!
+  Teacher: String!
+  Timetable(filter: ModelTaskFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelTaskConnection
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  _version: Int!
+  createdAt: AWSDateTime!
+  id: ID!
+  updatedAt: AWSDateTime!
+  userID: ID!
+}
+
+type Subscription {
+  onCreateIssue: Issue @aws_api_key @aws_iam @aws_subscribe(mutations : ["createIssue"])
+  onCreateSubject: Subject @aws_api_key @aws_iam @aws_subscribe(mutations : ["createSubject"])
+  onCreateTask: Task @aws_api_key @aws_iam @aws_subscribe(mutations : ["createTask"])
+  onCreateUser: User @aws_api_key @aws_iam @aws_subscribe(mutations : ["createUser"])
+  onDeleteIssue: Issue @aws_api_key @aws_iam @aws_subscribe(mutations : ["deleteIssue"])
+  onDeleteSubject: Subject @aws_api_key @aws_iam @aws_subscribe(mutations : ["deleteSubject"])
+  onDeleteTask: Task @aws_api_key @aws_iam @aws_subscribe(mutations : ["deleteTask"])
+  onDeleteUser: User @aws_api_key @aws_iam @aws_subscribe(mutations : ["deleteUser"])
+  onUpdateIssue: Issue @aws_api_key @aws_iam @aws_subscribe(mutations : ["updateIssue"])
+  onUpdateSubject: Subject @aws_api_key @aws_iam @aws_subscribe(mutations : ["updateSubject"])
+  onUpdateTask: Task @aws_api_key @aws_iam @aws_subscribe(mutations : ["updateTask"])
+  onUpdateUser: User @aws_api_key @aws_iam @aws_subscribe(mutations : ["updateUser"])
+}
+
+type Task @aws_api_key @aws_iam {
+  Description: String!
+  FinalDate: AWSTimestamp!
+  StartDate: AWSTimestamp!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  _version: Int!
+  createdAt: AWSDateTime!
+  id: ID!
+  subjectID: ID!
+  updatedAt: AWSDateTime!
+  userID: ID!
+}
+
+type User @aws_api_key @aws_iam {
+  Email: String!
+  Experience: Float!
+  Icon: AWSURL
+  Issues(filter: ModelIssueFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelIssueConnection
+  Level: Int!
+  Name: String!
+  Password: String!
+  Subjects(filter: ModelSubjectFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelSubjectConnection
+  Tasks(filter: ModelTaskFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelTaskConnection
+  Username: String!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  _version: Int!
+  createdAt: AWSDateTime!
+  id: ID!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelAttributeTypes {
+  _null
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input CreateIssueInput {
+  Answer: String!
+  Area: String!
+  Difficult: Int
+  Points: Int!
+  Question: String!
+  SubArea: String!
+  Theme: String
+  Type: String
+  _version: Int
+  id: ID
+  userID: ID!
+}
+
+input CreateSubjectInput {
+  Credits: Int!
+  Days: [String!]
+  Name: String!
+  Teacher: String!
+  _version: Int
+  id: ID
+  userID: ID!
+}
+
+input CreateTaskInput {
+  Description: String!
+  FinalDate: AWSTimestamp!
+  StartDate: AWSTimestamp!
+  _version: Int
+  id: ID
+  subjectID: ID!
+  userID: ID!
+}
+
+input CreateUserInput {
+  Email: String!
+  Experience: Float!
+  Icon: AWSURL
+  Level: Int!
+  Name: String!
+  Password: String!
+  Username: String!
+  _version: Int
+  id: ID
+}
+
+input DeleteIssueInput {
+  _version: Int
+  id: ID!
+}
+
+input DeleteSubjectInput {
+  _version: Int
+  id: ID!
+}
+
+input DeleteTaskInput {
+  _version: Int
+  id: ID!
+}
+
+input DeleteUserInput {
+  _version: Int
+  id: ID!
+}
+
+input ModelBooleanInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelFloatInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input ModelIDInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelIssueConditionInput {
+  Answer: ModelStringInput
+  Area: ModelStringInput
+  Difficult: ModelIntInput
+  Points: ModelIntInput
+  Question: ModelStringInput
+  SubArea: ModelStringInput
+  Theme: ModelStringInput
+  Type: ModelStringInput
+  and: [ModelIssueConditionInput]
+  not: ModelIssueConditionInput
+  or: [ModelIssueConditionInput]
+  userID: ModelIDInput
+}
+
+input ModelIssueFilterInput {
+  Answer: ModelStringInput
+  Area: ModelStringInput
+  Difficult: ModelIntInput
+  Points: ModelIntInput
+  Question: ModelStringInput
+  SubArea: ModelStringInput
+  Theme: ModelStringInput
+  Type: ModelStringInput
+  and: [ModelIssueFilterInput]
+  id: ModelIDInput
+  not: ModelIssueFilterInput
+  or: [ModelIssueFilterInput]
+  userID: ModelIDInput
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelStringInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input ModelSubjectConditionInput {
+  Credits: ModelIntInput
+  Days: ModelStringInput
+  Name: ModelStringInput
+  Teacher: ModelStringInput
+  and: [ModelSubjectConditionInput]
+  not: ModelSubjectConditionInput
+  or: [ModelSubjectConditionInput]
+  userID: ModelIDInput
+}
+
+input ModelSubjectFilterInput {
+  Credits: ModelIntInput
+  Days: ModelStringInput
+  Name: ModelStringInput
+  Teacher: ModelStringInput
+  and: [ModelSubjectFilterInput]
+  id: ModelIDInput
+  not: ModelSubjectFilterInput
+  or: [ModelSubjectFilterInput]
+  userID: ModelIDInput
+}
+
+input ModelTaskConditionInput {
+  Description: ModelStringInput
+  FinalDate: ModelIntInput
+  StartDate: ModelIntInput
+  and: [ModelTaskConditionInput]
+  not: ModelTaskConditionInput
+  or: [ModelTaskConditionInput]
+  subjectID: ModelIDInput
+  userID: ModelIDInput
+}
+
+input ModelTaskFilterInput {
+  Description: ModelStringInput
+  FinalDate: ModelIntInput
+  StartDate: ModelIntInput
+  and: [ModelTaskFilterInput]
+  id: ModelIDInput
+  not: ModelTaskFilterInput
+  or: [ModelTaskFilterInput]
+  subjectID: ModelIDInput
+  userID: ModelIDInput
+}
+
+input ModelUserConditionInput {
+  Email: ModelStringInput
+  Experience: ModelFloatInput
+  Icon: ModelStringInput
+  Level: ModelIntInput
+  Name: ModelStringInput
+  Password: ModelStringInput
+  Username: ModelStringInput
+  and: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+  or: [ModelUserConditionInput]
+}
+
+input ModelUserFilterInput {
+  Email: ModelStringInput
+  Experience: ModelFloatInput
+  Icon: ModelStringInput
+  Level: ModelIntInput
+  Name: ModelStringInput
+  Password: ModelStringInput
+  Username: ModelStringInput
+  and: [ModelUserFilterInput]
+  id: ModelIDInput
+  not: ModelUserFilterInput
+  or: [ModelUserFilterInput]
+}
+
+input UpdateIssueInput {
+  Answer: String
+  Area: String
+  Difficult: Int
+  Points: Int
+  Question: String
+  SubArea: String
+  Theme: String
+  Type: String
+  _version: Int
+  id: ID!
+  userID: ID
+}
+
+input UpdateSubjectInput {
+  Credits: Int
+  Days: [String!]
+  Name: String
+  Teacher: String
+  _version: Int
+  id: ID!
+  userID: ID
+}
+
+input UpdateTaskInput {
+  Description: String
+  FinalDate: AWSTimestamp
+  StartDate: AWSTimestamp
+  _version: Int
+  id: ID!
+  subjectID: ID
+  userID: ID
+}
+
+input UpdateUserInput {
+  Email: String
+  Experience: Float
+  Icon: AWSURL
+  Level: Int
+  Name: String
+  Password: String
+  Username: String
+  _version: Int
+  id: ID!
+}

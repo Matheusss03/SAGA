@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "issueAPI",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/home/matheus/SAGA_project/SAGA/amplify/backend/api/issueAPI/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authSAGA"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}

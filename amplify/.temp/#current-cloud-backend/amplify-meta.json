@@ -1,0 +1,90 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-saga-staging-03547-authRole",
+      "UnauthRoleArn": "arn:aws:iam::391418071293:role/amplify-saga-staging-03547-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::391418071293:role/amplify-saga-staging-03547-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-saga-staging-03547-deployment",
+      "UnauthRoleName": "amplify-saga-staging-03547-unauthRole",
+      "StackName": "amplify-saga-staging-03547",
+      "StackId": "arn:aws:cloudformation:us-east-1:391418071293:stack/amplify-saga-staging-03547/320bcae0-a0d3-11ec-ad9b-0a492b04931b",
+      "AmplifyAppId": "d2uynozs0ah754"
+    }
+  },
+  "auth": {
+    "SAGA": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "NAME",
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "us-east-1_meuGYAPS5",
+        "AppClientIDWeb": "1sdtgtbo4gt16aeh5qd5vl4hgr",
+        "AppClientID": "2bc8gb8pd2hbtgd4mgdlvotjj7",
+        "IdentityPoolId": "us-east-1:52681301-6fda-45aa-b1d7-a0f1b701e830",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:391418071293:userpool/us-east-1_meuGYAPS5",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "SAGA"
+      },
+      "lastPushTimeStamp": "2022-03-13T00:55:23.304Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saga-staging-03547-deployment/amplify-cfn-templates/auth/SAGA-cloudformation-template.json",
+        "logicalId": "authSAGA"
+      }
+    }
+  },
+  "api": {
+    "SAGA": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "ddupvhbimng5rft3dnnl2honqa",
+        "GraphQLAPIEndpointOutput": "https://sanfymcm65heziatuunqqltz34.appsync-api.us-east-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-xjmg3zbtmze6vgvwqj33o3hoia"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-saga-staging-03547-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiSAGA"
+      },
+      "lastPushTimeStamp": "2022-03-13T00:55:25.635Z",
+      "lastPushDirHash": "UsimJUNAoZLK9ZPSwZ7Y4aNbfnc="
+    }
+  }
+}
