@@ -33,7 +33,8 @@
     "react-navigation-tabs": "^2.11.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@tsconfig/recommended": "^1.0.1"
   },
   "private": true
 }
