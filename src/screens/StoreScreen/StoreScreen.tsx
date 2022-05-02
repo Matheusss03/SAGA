@@ -1,4 +1,4 @@
-import {View, Text, FlatList, StyleSheet, ListRenderItemInfo} from 'react-native'
+import {View, FlatList, StyleSheet, ListRenderItemInfo} from 'react-native'
 import React from 'react'
 
 import { Loja, storeList } from "../../../data/store"
@@ -7,9 +7,11 @@ import StoreItem from "../../components/StoreItem/StoreItem"
 import { SeparatorItem } from '../../components/SeparatorItem/SeparatorItem'
 
 const StoreScreen = () => {
-  function renderItem({ item }: ListRenderItemInfo<Loja>) {
+
+  function renderItem({ item }: ListRenderItemInfo<Loja>) { 
     return <StoreItem {...item}/>
   }
+
   return (
     <View style={styles.container}>
       <FlatList

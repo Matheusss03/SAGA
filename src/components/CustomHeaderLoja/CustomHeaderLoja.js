@@ -20,7 +20,7 @@ function CustomHeaderLoja() {
     <>
       <Image style={{ width, height }} source={cover} />
       <View style={styles.container}>
-        <Text style={styles.title}>Monte Olimpo</Text>
+        <Text style={styles.title}>Tenda do Monte Olimpo</Text>
       </View>
     </>
   )

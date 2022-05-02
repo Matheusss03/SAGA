@@ -1,18 +1,20 @@
-import { View, Text, Image, StyleSheet } from "react-native-web"
+import { View, Text, Image, StyleSheet } from "react-native"
 import React from 'react'
 import { Loja } from '../../../data/store'
 
 function StoreItem({ name, image, price }: Loja) {
+
   return (
-    <View style={styles.container}>
-      <Image style={{ width: 120, height: 100 }} source={image} />
-      <View style={styles.content}>
-        <Text style={styles.title}>{name}</Text>
-        <Text numberOfLines={5} style={styles.description}>
-          {price}
-        </Text>
+      <View style={styles.container}>
+        <Image style={{ resizeMode: "contain", width: 80, height: 60 }} source={image} />
+        <View style={styles.content}>
+          <Text style={styles.title}>{name}</Text>
+          <Text numberOfLines={5} style={styles.description}>
+            <Image style={{ width: 20, height: 20, borderRadius: 10 }} source={require("../../../assets/store/moeda.png")}/>
+              {price}
+          </Text>
+        </View>
       </View>
-    </View>
   )
 }
 
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
       color: "#6F4E37",
       marginBottom: 16,
     },
+
     description: {
       fontSize: 16,
       color: "#000",

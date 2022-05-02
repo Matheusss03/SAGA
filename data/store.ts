@@ -1,6 +1,9 @@
-export interface Loja {
+import { type } from "os";
+import { ImageProps } from "react-native"
+
+export type Loja = {
     name: string;
-    image: File;
+    image: ImageProps["source"];
     description: string;
     price: number;
 }
@@ -27,7 +30,7 @@ export const storeList: Loja[] = [
         name: "Benção de Zeus",
         image: imageZeus,
         description: "Ganhe 20 pontos de experiência.",
-        price: 2
+        price: 20
     },
     {
         name: "Afago de Hera",
