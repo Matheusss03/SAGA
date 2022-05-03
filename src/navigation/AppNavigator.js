@@ -32,11 +32,11 @@ const AppNavigator = () => {
             }
         }}>
         <Tab.Screen 
-            name="Home" 
-            component={HomeScreen} 
+            name="Perfil" 
+            component={ProfileScreen} 
             options={{
                 tabBarIcon: ({size, color}) => (
-                    <FontAwesome5 name={'home'} size={size} color={color}/>
+                    <FontAwesome5 name={'user-alt'} size={size} color={color}/>
                 )}}/>
         <Tab.Screen 
             name="Calendário" 
@@ -59,16 +59,18 @@ const AppNavigator = () => {
                 tabBarIcon: ({size, color}) => (
                     <FontAwesome5 name={'store'} size={size} color={color}/>
                 )}}/>
-        <Tab.Screen 
-            name="Perfil" 
-            component={ProfileScreen} 
-            options={{
-                tabBarIcon: ({size, color}) => (
-                    <FontAwesome5 name={'user-alt'} size={size} color={color}/>
-                )}}/>
     </Tab.Navigator>
   )
 }
+/*
+<Tab.Screen 
+            name="Home" 
+            component={HomeScreen} 
+            options={{
+                tabBarIcon: ({size, color}) => (
+                    <FontAwesome5 name={'home'} size={size} color={color}/>
+                )}}/>
+*/
 
 const styles = StyleSheet.create({
     shadow: {
