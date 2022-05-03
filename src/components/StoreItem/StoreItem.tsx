@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet } from "react-native"
 import React from 'react'
 import { Loja } from '../../../data/store'
 
-function StoreItem({ name, image, price }: Loja) {
+function StoreItem({ name, image, price, description }: Loja) {
 
   return (
       <View style={styles.container}>
@@ -13,6 +13,7 @@ function StoreItem({ name, image, price }: Loja) {
             <Image style={{ width: 20, height: 20, borderRadius: 10 }} source={require("../../../assets/store/moeda.png")}/>
               {price}
           </Text>
+          <Text style={styles.description}>{description}</Text>
         </View>
       </View>
   )
